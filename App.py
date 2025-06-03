@@ -3,6 +3,8 @@ import EliminarProducto
 import conexionDB
 import BuscarProducto
 import MostrarProductos
+import tkinter as tkr
+import InterfazTkinter
 
 while True:
     print("Bienvenido al inventario")

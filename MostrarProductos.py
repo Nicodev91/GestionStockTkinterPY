@@ -1,12 +1,16 @@
 from conexionDB import conn, cursor
-# Ejemplo de función para consultar todos los productos
+
 def mostrar_productos():
-    # Aquí le decimos a Python que ejecute la consulta SQL para obtener todos los productos
-    cursor.execute("SELECT * FROM productos")
-    
-    # Aquí le decimos a Python que obtenga todos los resultados de la consulta
+    cursor.execute("SELECT nombre, codigo, cantidad FROM productos")
+
     productos = cursor.fetchall()
-    
-    # Aquí le decimos a Python que imprima cada producto obtenido
+
+    if not productos:
+        return "No hay productos registrados."
+
+    resultado = ""
     for producto in productos:
-        print(producto)
+        resultado += f"Nombre: {producto[0]}, Codigo: {producto[1]}, Cantidad: {producto[2]}\n"
+
+    
+    return resultado
