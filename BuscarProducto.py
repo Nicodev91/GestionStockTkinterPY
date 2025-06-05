@@ -12,3 +12,5 @@ def buscar_producto_por_codigo(codigo):
         print("Producto encontrado:", producto)
     else:
         print("No se encontró producto con ese código.")
+
+    return producto
