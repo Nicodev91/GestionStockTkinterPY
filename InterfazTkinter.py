@@ -5,6 +5,10 @@ import BuscarProducto
 import MostrarProductos
 import AgregarVariosProductos
 from tkinter import filedialog
+import EliminarTodo
+from tkinter import simpledialog
+from AgregarCantidad import agregar_cantidad_a_producto
+from RestarCantidad import restar_cantidad
 
 def iniciar_interfaz():
     ventana = tk.Tk()
@@ -26,6 +30,25 @@ def agregar_producto():
         actualizar_salida("✅ Producto agregado correctamente.")
     except Exception as e:
         actualizar_salida(f"❌ Error: {str(e)}")
+
+def agregar_stock():
+    try:
+        codigo = int(entry_codigo.get())
+        cantidad = int(entry_cantidad.get())
+        mensaje = agregar_cantidad_a_producto(codigo, cantidad)
+        actualizar_salida(mensaje)
+    except Exception as e:
+        actualizar_salida(f"❌ Error: {str(e)}")
+
+def restar_stock():
+    try:
+        codigo = int(entry_codigo.get())
+        cantidad = int(entry_cantidad.get())
+        mensaje = restar_cantidad(codigo, cantidad)
+        actualizar_salida(mensaje)
+    except Exception as e:
+        actualizar_salida(f"❌ Error: {str(e)}")
+
 
 def eliminar_producto():
     try:
@@ -70,6 +93,16 @@ def importar_excel():
         resultado = AgregarVariosProductos.agregar_productos_desde_excel(archivo)
         actualizar_salida(resultado)
 
+def eliminar_todos_los_productos():
+    contraseña = simpledialog.askstring("Confirmación", "Ingrese la contraseña para eliminar todo:", show='*')
+
+    if contraseña:
+        resultado = EliminarTodo.eliminar_todo(contraseña)
+        actualizar_salida(resultado)
+    else:
+        messagebox.showerror("Contraseña incorrecta", "Operación cancelada.")
+
+
 
 # Interfaz principal
 ventana = tk.Tk()
@@ -110,9 +143,14 @@ frame_botones.pack()
 
 tk.Button(frame_botones, text="Importar desde Excel", command=importar_excel, width=20).grid(row=1, column=0, padx=5, pady=10)
 tk.Button(frame_botones, text="Agregar Producto", command=agregar_producto, width=20).grid(row=0, column=0, padx=5)
+tk.Button(frame_botones, text="Agregar Stock", command=agregar_stock, width=20).grid(row=1, column=1, padx=5, pady=10)
+tk.Button(frame_botones, text="Agregar Stock", command=agregar_stock, width=20).grid(row=1, column=1, padx=5, pady=10)
 tk.Button(frame_botones, text="Eliminar Producto", command=eliminar_producto, width=20).grid(row=0, column=1, padx=5)
+tk.Button(frame_botones, text="Restar Stock", command=restar_stock, width=20).grid(row=1, column=2, padx=5, pady=10)
 tk.Button(frame_botones, text="Buscar Producto", command=buscar_producto, width=20).grid(row=0, column=2, padx=5)
 tk.Button(frame_botones, text="Mostrar Productos", command=mostrar_productos, width=20).grid(row=0, column=3, padx=5)
+tk.Button(frame_botones, text="Eliminar Todos", command=eliminar_todos_los_productos, width=20).grid(row=0, column=4, padx=5)
+
 
 # Frame de salida
 frame_salida = tk.LabelFrame(ventana, text="Resultados", padx=10, pady=10)
@@ -122,3 +160,5 @@ salida_text = tk.Text(frame_salida, height=20, wrap=tk.WORD, state='disabled', b
 salida_text.pack(fill=tk.BOTH, expand=True)
 
 ventana.mainloop()
+
+

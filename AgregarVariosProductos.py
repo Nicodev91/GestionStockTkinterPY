@@ -1,5 +1,6 @@
 import openpyxl
 import AgregarProducto
+import sqlite3
 
 def agregar_productos_desde_excel(nombre_archivo):
     try:
